@@ -13,6 +13,8 @@ const ColorList = ({ colors, updateColors, props }) => {
   const [colorToEdit, setColorToEdit] = useState(initialColor);
   const params = useParams()
 
+
+
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -23,15 +25,19 @@ const ColorList = ({ colors, updateColors, props }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-
+    axiosWithAuth()
+    .put(`/colors/${params.id}`,setColorToEdit)
 };
 
   const deleteColor = color => {
     // make a delete request to delete this color
 axiosWithAuth()
-.delete(`/api/colors/${params.id}`)
+.delete(`/colors/${params.id}`)
 .then(() => {
   props.setColorList(state => state.filter(color => color.id != params.id))
+})
+.catch((err) => {
+  console.log(err)
 })
   };
 
